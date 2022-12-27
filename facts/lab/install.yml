@@ -1,0 +1,23 @@
+---
+- name: install http using custom facts
+  hosts: slave1
+  collections:
+    - ansile.builtin
+  tasks:
+    - name: packges facts
+      package_facts:
+        manager: auto
+    - name: ensure httpd is uninstalled
+      yum:
+        name: httpd
+        state: absent
+      when: "'httpd' in ansible_facts['packages']"
+    - name: Install httpd 
+      yum:
+        name: "{{ ansible_facts['ansible_local']['packages']['software']['package'] }}"
+        state: latest
+    - name: start httpd
+      service:
+        name: "{{ ansible_facts['ansible_local']['packages']['software']['service'] }}"
+        state: "{{ ansible_facts['ansible_local']['packages']['software']['state'] }}"
+        enabled: "{{ ansible_facts['ansible_local']['packages']['software']['enabled'] }}"

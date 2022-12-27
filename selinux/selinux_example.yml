@@ -1,0 +1,19 @@
+---
+- name: a demo using selinux
+  hosts: slave3
+  tasks:
+    - name: installing pre-requests
+      yum:
+        name: policycoreutils-python-utils
+        state: present
+    - name: set file context
+      sefcontext:
+        target: /tmp/removed
+        setype: tmp_t
+        state: present
+      notify:
+       - run_restorcon
+  handlers:
+    - name: run_restorcon
+      command: restorecon -v /tmp/removed
+  

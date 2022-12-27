@@ -1,0 +1,19 @@
+---
+partitions:
+  - number: 1
+    start: 1MiB
+    end: 200MiB
+
+vgs:
+  - name: vgweb
+    devices: /dev/nvme0n2p1
+
+lvs:
+  - name: lvwebdecos
+    size: 50M
+    vgroup: vgweb
+    path: /var/www
+  - name: lvlogs
+    size: 50M
+    vgroup: vgweb
+    path: /var/log/httpd

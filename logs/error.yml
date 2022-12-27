@@ -1,0 +1,12 @@
+---
+- name: error
+  hosts: all
+  vars:
+    service: httpd
+  tasks:
+    - name:
+      firewalld:
+        service: {{ service }}
+        permanent: yes
+        immediate: yes
+        state: enabled

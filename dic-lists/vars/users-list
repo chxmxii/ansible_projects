@@ -1,0 +1,10 @@
+users:
+  - username: alex
+    shell: /bin/bash
+    homedir: /home/alex
+  - username: bob
+    shell: /bin/bash
+    homedir: /home/bob
+  - username: brime
+    shell: /bin/bash
+    homedir: /home/brime

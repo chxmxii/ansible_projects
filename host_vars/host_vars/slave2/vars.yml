@@ -1,0 +1,5 @@
+packages:
+  - httpd
+  - nginx
+  - smbd
+  - MySQL

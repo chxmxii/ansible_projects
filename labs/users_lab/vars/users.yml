@@ -1,0 +1,11 @@
+users:
+  - username: kriss
+    groups: aws
+  - username: alexa
+    groups: gitlab
+  - username: anton
+    groups: vagrant
+  - username: louis
+    groups: k8s
+  - username: vald
+    groups: aws

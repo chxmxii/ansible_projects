@@ -1,0 +1,20 @@
+---
+- name: Change the target boot
+  hosts: slave1
+  tasks:
+    - name: Changing target boot to multi-user.target
+      file:
+        src: /usr/lib/systemd/system/multi-user.target
+        dest: /usr/lib/systemd/system/default.target
+        state: link
+      notify: reboot_me
+  handlers:
+    - name: reboot_me
+      reboot:
+- name: print
+  hosts: slave1
+  tasks:
+    - name: print
+      debug:
+        msg: "MAchine reboto succ"
+

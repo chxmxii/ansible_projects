@@ -1,0 +1,34 @@
+---
+- name: Setting up a local repo
+  hosts: localhost
+  tasks:
+    - name: Install vsftpd
+      yum:
+        name: vsftpd
+        state: latest
+    - name: start vsftpd
+      service:
+        name: vsftpd
+        state: started
+        enabled: true
+    - name: open firewall
+      ansible.posix.firewalld:
+        service: ftp
+        state: enabled
+        permanent: true
+      vars:
+        ansible_python_interpreter: '/usr/bin/python3'
+    - name: make a repo dir
+      file:
+        path: /var/ftp/repo
+        state: directory
+    - name: install dnf utils
+      yum:
+        name:
+        - dnf-utils
+        - createrepo
+        state: latest
+    - name: DOwnload some packs
+      command: yumdownloader nmap --destdir /var/ftp/repo
+    - name: create repo
+      command: createrepo /var/ftp/repo

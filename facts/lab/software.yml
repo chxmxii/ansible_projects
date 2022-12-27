@@ -1,0 +1,14 @@
+---
+- name: copy custom facts
+  hosts: slave1
+  collections: ansible.builtin
+  tasks:
+    - name: make dir
+      file:
+        path: /etc/ansible/facts.d
+        recurse: yes
+        state: directory
+    - name: copy file
+      copy:
+        src: facts/packages.fact
+        dest: /etc/ansible/facts.d/

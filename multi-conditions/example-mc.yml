@@ -1,0 +1,12 @@
+---
+- name: Using multi-conditions
+  hosts: all
+  tasks: 
+    - command: sudo subscription-manager register 
+    - name: installing httpd package
+      yum:
+         name: httpd
+         state: installed
+      when:
+        - ansible_distribution == "RedHat"
+        - ansible_memfree_mb < 1024

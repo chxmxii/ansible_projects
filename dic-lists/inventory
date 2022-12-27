@@ -1,0 +1,6 @@
+[front]
+slave1 ansible_user=user
+[back]
+slave2 ansible_user=user
+[db]
+slave3 ansible_user=user

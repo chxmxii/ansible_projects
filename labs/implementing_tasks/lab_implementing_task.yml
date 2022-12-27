@@ -1,0 +1,25 @@
+---
+- name: Implementing tasks
+  hosts: slave3
+  tasks:
+    - name: installing mariadb
+      package:
+        name: mariadb-server
+        state: present
+      when: ansible_distribution == "RedHat"
+    - name: Installing python3-PyMySql
+      pip:
+        name: PyMySQL
+    - name: Starting the mariadb service
+      service:
+        name: mariadb.service
+        enabled: yes
+      notify:
+        - root_passwd
+  handlers:
+    - name: root_passwd
+      mysql_user:
+        name: root
+        password: root
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+        state: present

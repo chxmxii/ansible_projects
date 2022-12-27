@@ -1,0 +1,40 @@
+---
+- name: Make partitions
+  hosts: slave1
+  collections:
+    - community.general
+  vars_files:
+    - vars/storage.yml
+  tasks:
+    - name: make partition
+      parted:
+        device: /dev/nvme0n2
+        state: present
+        number: "{{ item.number }}"
+        part_start: "{{ item.start }}"
+        part_end: "{{ item.end }}"
+      loop: "{{ partitions }}"
+    - name: make vg
+      lvg:
+        vg: "{{ item.name }}"
+        pvs: "{{ item.devices }}"
+      loop: "{{ vgs }}"
+    - name: make lv
+      lvol:
+        vg: "{{ item.vgroup }}"
+        lv: "{{ item.name }}"
+        size: "{{ item.size }}"
+      loop: "{{ lvs }}"
+      when: item.name not in ansible_lvm['lvs']
+    - name: Config Filesystem xfs
+      filesystem:
+        dev: "/dev/{{ item.vgroup }}/{{ item.name }}"
+        fstype: xfs
+      loop: "{{ lvs }}"
+    - name: mounting
+      mount:
+        path: "{{ item.path }}"
+        src: "/dev/{{ item.vgroup }}/{{ item.name }}"
+        fstype: xfs
+        state: mounted
+      loop: "{{ lvs }}"

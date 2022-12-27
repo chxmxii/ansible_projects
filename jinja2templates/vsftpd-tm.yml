@@ -1,0 +1,17 @@
+---
+- name: DEMO for using jinja2 templates
+  hosts: slave3 slave2
+  vars:
+    - anonymous_enable: yes
+    - local_enable: no
+    - write_enable: yes
+    - anon_upload_enable: yes
+  tasks:
+    - name: install vsftpd
+      yum:
+        name: vsftpd
+        state: installed
+    - name: Copy the ftp config
+      template:
+        src: vsftpd.j2
+        dest: /etc/vsftpd/vsftpd.conf

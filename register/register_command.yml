@@ -1,0 +1,11 @@
+---
+- name: creating user if not exist
+  hosts: slave3
+  tasks:
+    - name: verifying user if it does exist
+      shell: cat /etc/passwd
+      register: passwd_contents
+    - user:
+        name: Bob
+        groups: users
+      when: passwd_contents.stdout.find('bob') != 1

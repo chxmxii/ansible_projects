@@ -1,0 +1,9 @@
+---
+- name: A lab about dicts
+  hosts: slave2
+  vars_files:
+    - vars/users-dict
+  tasks:
+    - name: Printing soupy value
+      debug:
+        msg: "User {{ users.soupy.username }} has homedire {{ users.soupy.homedir }} and shell {{ users.soupy.shell }}"

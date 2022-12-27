@@ -1,0 +1,13 @@
+---
+- name: starting a bunch of services
+  hosts: all
+  vars:
+    the_services:
+      - httpd
+      - sshd
+  tasks:
+    - name: starting services
+      service:
+        name: "{{ item }}"
+        state: started
+      loop: "{{ the_services }}"

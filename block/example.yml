@@ -1,0 +1,17 @@
+---
+- name: a demo about blocks
+  hosts: all
+  tasks:
+    - name: task intended to be successful
+      block:
+        - name: remove a file
+          shell:
+            cmd: /usr/bin/rm /var/www/html/index.html
+      rescue:
+        - name: create a file
+          shell:
+            cmd: /usr/bin/touch /tmp/rescue_file
+      always:
+        - name: write loogs
+          shell:
+            cmd: /usr/bin/logger hello

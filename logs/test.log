@@ -1,0 +1,21 @@
+2022-11-06 07:23:31,195 p=6525 u=ansible n=ansible | slave3 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/libexec/platform-python"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+2022-11-06 07:23:31,242 p=6525 u=ansible n=ansible | slave2 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/libexec/platform-python"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+2022-11-06 07:23:31,276 p=6525 u=ansible n=ansible | slave1 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/libexec/platform-python"
+    },
+    "changed": false,
+    "ping": "pong"
+}

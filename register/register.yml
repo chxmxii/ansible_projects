@@ -1,0 +1,13 @@
+---
+- name: a register demo
+  hosts: all
+  tasks:
+    - name: echoing
+      shell: "echo {{ item }}"
+      loop:
+        - "one"
+        - "three"
+      register: echo
+    - name: show register results
+      debug:
+        var: echo

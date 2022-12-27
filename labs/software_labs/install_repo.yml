@@ -1,0 +1,23 @@
+---
+- name: configure repos
+  hosts: all
+  vars:
+    - m_package: nmap
+  tasks:
+    - name: connect to repo
+      yum_repository:
+        name: lab 12
+        baseurl: ftp://control.example.com/repo/
+        description: my first repo
+        gpgcheck: no
+    - name: install apckage
+      package:
+        name: "{{ m_package }}"
+        state: present
+    - name: update package facts
+      package_facts:
+        manager: auto
+    - name: show package facts
+      debug:
+        var: ansible_facts.packages[m_package]
+      when: m_package in ansible_facts.packages

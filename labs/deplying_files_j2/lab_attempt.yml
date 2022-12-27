@@ -1,0 +1,49 @@
+---
+- name: ftp upload
+  hosts: all
+  vars:
+    - anonymous_enable: yes
+    - anon_upload_enable: yes
+  tasks:
+    - name: Installing vsftpd
+      yum:
+        name: vsftpd
+        state: present
+    - name: enabling the vsftpd serice
+      service:
+        name: vsftpd
+        state: started
+        enabled: yes
+    - name: Opening the firewall
+      firewalld:
+        service: vsftp
+        permanent: yes
+        state: enabled
+        immediate: yes
+    - name: copying the vsftpd.conf
+      template:
+        src: ftp_conf.j2
+        dest: /etc/vsftpd/vsftpd.conf
+    - name: create dir if not exist
+      file:
+        path: /var/ftp/pub
+        state: directory
+        mode: 0640
+    - name: set selinux
+      sefcontext:
+        target: /var/ftp/pub
+        setype: public_content_t
+        state: present
+      notify:
+        - apply_changes
+    - name: activating the ftp selinux boolean
+      command: semanage boolean -m --on ftpd_anon_write
+  handlers:
+    - name: apply_changes
+      command: restorecon -v /var/ftp/pub
+
+- name: Verifying 
+  hosts: all
+  tasks:
+    - name: testing connectivity
+      shell: vsftpd slave1

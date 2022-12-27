@@ -1,0 +1,28 @@
+---
+- name: DataBase Server is running..
+  hosts: slave3
+  vars:
+    db_package:
+      - mariadb-server
+      - python3-PyMySQL
+  tasks:
+    - name: installing mariadb packages
+      yum:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ db_package }}"
+      when: (ansible_distribution == "RedHat" or ansible_distribution == "CentOS") and ansible_distribution_major_version == "8"
+    - name: Starting the mariadb service
+      service:
+        name: mariadb
+        state: started
+        enabled: True
+      notify:
+        - root_passwd
+  handlers:
+    - name: root_passwd
+      mysql_user:
+        name: root
+        password: root
+       # login_unix_socket: /var/run/mysqld/mysqld.sock
+       # state: present

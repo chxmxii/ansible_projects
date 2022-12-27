@@ -1,0 +1,26 @@
+---
+- name: file modules
+  hosts: slave2
+  tasks:
+    - name: copy file demo
+      copy:
+        src: /etc/hosts
+        dest: /tmp/
+    - name: add some lines to /tmp/hosts using blockinfile module
+      blockinfile:
+        path: /tmp/hosts
+        block: |
+          1010101 fake.example.com
+          0101010 fake2.example.com
+        #state: present
+    - name: verify file checksum using the stat module
+      stat:
+        path: /tmp/hosts
+        checksum_algorithm: md5
+      register: result
+    - debug:
+        msg: "The checksum of file /tmp/hosts is {{ result.stat.checksum }}"
+    - name: fetch the file using fetch module
+      fetch:
+        src: /tmp/hosts
+        dest: /tmp/

@@ -1,0 +1,25 @@
+---
+- name: Gather facts for disk divces
+  gather_facts: false
+  hosts: slave1
+  vars:
+    disks: []
+  tasks:
+    - name: setup
+      setup:
+      register: factz
+
+    - name: set fact
+      set_fact:
+        all_dev: "{{ factz.ansible_facts['ansible_devices'] }}"
+
+    - name: Filter returned data
+      set_fact:
+        disks: "{{ disks + [ item.key ] }}"
+      with_dict: "{{ all_dev }}"
+      when: item.value.host
+
+    - debug:
+        msg: "{{ disks }}"
+    - debug: 
+        msg: "{{ disks[1] }}"

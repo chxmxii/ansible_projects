@@ -1,0 +1,6 @@
+---
+- name: NIC Configuration
+  hosts: slave1
+  roles:
+    - rhel-system-roles.network
+    

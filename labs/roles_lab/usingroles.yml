@@ -1,0 +1,12 @@
+---
+- name: creating apache vhost
+  hosts: slave2
+  
+  roles:
+    - lab
+
+  post_tasks:
+    - name: Install contents from local file
+      copy:  
+        src: file/html/
+        dest: "/var/www/vhosts/{{ ansible_hostname }}"

@@ -1,0 +1,9 @@
+sudo_groups:
+  - name: gitlab
+    sudo: yes
+  - name: vagrant
+    sudo: no
+  - name: aws
+    sudo: yes
+  - name: k8s
+    sudo: no

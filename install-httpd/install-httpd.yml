@@ -1,0 +1,23 @@
+---
+- name: Install httpd service
+  hosts: slave1
+  tasks:
+    - name: install package
+      package:
+        name: httpd
+        state: present
+    - name: create index.html
+      copy:
+        content: "Hello world"
+        dest: /var/www/html/index.html
+    - name: start httpd service
+      service:
+        name: httpd
+        state: started
+        enabled: True
+    - name: open firewall 
+      firewalld:
+        service: http
+        permanent: yes
+        state: enabled
+        immediate: true

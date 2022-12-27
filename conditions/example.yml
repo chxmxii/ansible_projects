@@ -1,0 +1,13 @@
+---
+- name: Using the when condition
+  hosts: all
+  vars:
+    supported:
+      - Fedora
+      - CentOS
+  tasks:
+    - name: Install httpd in RH familly distrubtions
+      yum:
+        name: httpd
+        state: present
+      when: ansible_distribution in supported

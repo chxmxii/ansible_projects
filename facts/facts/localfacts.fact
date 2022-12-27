@@ -1,0 +1,4 @@
+[testing_facts]
+package = samba
+service = smb.service
+state = enabled

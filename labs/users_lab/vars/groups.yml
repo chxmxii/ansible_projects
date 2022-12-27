@@ -1,0 +1,5 @@
+groupname:
+- groupname: k8s
+- groupname: gitlab
+- groupname: aws
+- groupname: vagrant

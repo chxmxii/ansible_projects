@@ -1,0 +1,12 @@
+---
+- name: sample example for change_status
+  hosts: all
+  tasks:
+    - name: check local time
+      command: date
+      register: cmd_result
+      changed_when: true
+
+    - name: print localtime
+      debug:
+        var: cmd_result.stdout

@@ -1,0 +1,17 @@
+---
+- name: close firewalld
+  hosts: slave1
+  tasks:
+    - name: close firewaldd
+      firewalld:
+        service: http
+        permanent: yes
+        state: disabled
+    - name: remove index.html
+      file:
+        path: /var/www/html/index.html
+        state: absent
+    - name: remove package
+      package:
+        name: httpd
+        state: absent

@@ -1,0 +1,11 @@
+---
+- name: using the file module
+  hosts: slave1, slave3
+  tasks:
+    - name: creating a file
+      file:
+        path: /tmp/file1
+        owner: user
+        mode: 0640
+        state: touch
+        setype: public_content_rw_t

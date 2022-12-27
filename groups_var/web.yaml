@@ -1,0 +1,10 @@
+---
+- name: Installing httpd and enabling it 
+  hosts: front
+  tasks:
+    - name: this is the {{ web_package }} package
+      debug:
+        msg: "Installing the  {{ web_package }} "
+    - name: this is the {{ web_service }} service
+      debug:
+        msg: "Installing the {{ web_service}} "

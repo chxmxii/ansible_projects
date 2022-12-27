@@ -1,0 +1,18 @@
+---
+- name: a demo for fail module
+  hosts: all
+  tasks:
+    - name: Impossible to do task
+      lvol:
+        lv: lvnthg
+        vg: vgnthg
+        size: 1G
+      register: lv_result
+      ignore_errors: yes
+    - name: show the lv_result errors
+      debug:
+        var: lv_result
+    - name: print a mesage
+      fail:
+        msg: vol group doesn't exist
+      when: "'not found' in lv_result.err"

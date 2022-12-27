@@ -1,0 +1,8 @@
+---
+- name: a simple demo for host_vrs
+  hosts: slave2
+  tasks:
+    - name: printing different packages names
+      debug:
+        msg: "package name : {{ item }}"
+      loop: "{{ packages }}"
